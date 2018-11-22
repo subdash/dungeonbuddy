@@ -1,20 +1,7 @@
 # Dungeon Buddy
 
-## What is Dungeon Buddy?
-Dungeon Buddy is a D&D pet project that is currently still in the works.
-
-**What is here right now**
-
-- A basic API that can pull data from the [Dungeons & Dragons 5th Edition compendium at roll20.net](https://roll20.net/compendium/)
-- A single basic test that is about as extensive as the API is
-
-**What is planned**
-
-A web app or mobile app where you can...
-- Make and store a character sheet
-- Easily access skills, spells, and any information a player or DM could need
-- User roles (player, dungeon master, etc.)
-- Much, much more
+## What is this?
+A web scraper that can pull data from the Dungeons & Dragons 5th Edition compendium at [roll20.net](https://roll20.net/compendium/)
 
 **Quick Demo**
 

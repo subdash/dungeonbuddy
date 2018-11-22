@@ -144,6 +144,18 @@ class Parser:
         for i in range(len(all_keys)):
             self.add_attribute(all_keys[i].string, all_values[i].string)
 
+    def gather_pagecontent(self):
+        """Retrieves text from the div with the id of 'pagecontent'. For a
+        spell, this contains its description.
+        (May want to implement logic so that this only triggers for spells)
+        """
+        # Works for spells, not so well for something like 'paladin'
+        pagecontent = self.soup.find(id='pagecontent').text
+        # NOTE: Add a check here for if description attribute already has
+        # a value
+        self.add_attribute('description', pagecontent)
+
+
 
 class DungeonBuddy:
     """This class represents the public interface for the API. It has a single
@@ -152,7 +164,7 @@ class DungeonBuddy:
     def __init__(self):
         self.base_url = 'https://roll20.net'
 
-    def get_result(self, search_term):
+    def get_result(self, search_term, as_obj=False):
         """Takes a search term as an argument and returns a JSON formatted
         string. There should be 3 possible non-error results:
         - A single JSON object     (when search returns a single result)
@@ -175,6 +187,7 @@ class DungeonBuddy:
         if isinstance(result_obj, requests.models.Response):
             p = Parser(result_obj)
             p.gather_attributes()
+            p.gather_pagecontent()
             return json.dumps(p.details)  # Return JSON formatted string
 
         # Multiple results or no match
@@ -186,7 +199,11 @@ class DungeonBuddy:
                 parsed_content = Parser(content)
                 parsed_content.gather_attributes()
                 data.append(dict({name: parsed_content.details}))
-            return json.dumps(data)
+            if as_obj is True:
+                # Returns str... why? Should return dict
+                return json.loads(json.dumps(data))
+            else:
+                return json.dumps(data)
 
         # result_obj should always be of type Response or list
         raise Exception('An unknown error occurred.')

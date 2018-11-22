@@ -37,7 +37,7 @@ def test_parser():
     assert p.details['title'] == 'Eldritch Blast | D&D 5th Edition on Roll20 Compendium'
     assert p.details['Casting Time'] == '1 action'
     assert p.details['Range'] == '120 feet'
-    # assert p.details['components'] == 'V S'  # Not working for some reason...
+    assert p.details['Components'] == 'V S'
     assert p.details['Duration'] == 'Instantaneous'
     assert p.details['Classes'] == 'Warlock'
 
