@@ -63,7 +63,6 @@ class Retriever:
                             f'{response.status_code} instead.)')
 
         if response.url != url:  # Redirected to new page with content
-            # DEBUG:
             print(f'(Redirected to {response.url})')
 
             return response
@@ -100,7 +99,6 @@ class Retriever:
                 # Otherwise, add the resource to a list to return
                 response_links.append(HyperLink(text=text, link=uri))
 
-        # DEBUG:
         print(f'(Unable to find an exact match for {search_term}.)')
 
         return response_links
@@ -147,12 +145,9 @@ class Parser:
     def gather_pagecontent(self):
         """Retrieves text from the div with the id of 'pagecontent'. For a
         spell, this contains its description.
-        (May want to implement logic so that this only triggers for spells)
         """
         # Works for spells, not so well for something like 'paladin'
         pagecontent = self.soup.find(id='pagecontent').text
-        # NOTE: Add a check here for if description attribute already has
-        # a value
         self.add_attribute('description', pagecontent)
 
 
@@ -200,7 +195,6 @@ class DungeonBuddy:
                 parsed_content.gather_attributes()
                 data.append(dict({name: parsed_content.details}))
             if as_obj is True:
-                # Returns str... why? Should return dict
                 return json.loads(json.dumps(data))
             else:
                 return json.dumps(data)
